@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicate Filter & Remover</title>
+    <style>
+        * {
+            font-family: monospace;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            padding: 10px;
+        }
+        label {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #dedede;
+            height: 35vh;
+        }
+        textarea:focus, textarea:active, textarea:hover {
+            outline: none;
+            border: 1px solid #999;
+        }
+        button {
+            display: block;
+            width: 100%;
+            height: 50px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border: 1px solid #dedede;
+            cursor: pointer;
+        }
+        button:focus {
+            outline: none;
+            border: 1px solid #999;
+        }
+        button:hover {
+            border: 1px solid #999;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        #result-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Duplicate Filter
+ & Remover</h1>
+        <p>Enter the text you want to scan in the first text box and the text you want to remove in the second text box.<br />Then click the button to remove duplicates. <span style="text-decoration: underline;">Please note that each line of the text will be filtered individually.</span></p>
+    </div>
+
+    <div id="form-container">
+        <div>
+            <label for="">Text To Scan</label>
+            <textarea id="scan"></textarea>
+        </div>
+
+        <div>
+            <label for="">Search And Remove</label>
+            <textarea id="remove"></textarea>
+        </div>
+
+        <div>
+            <button onclick="remove_duplicates()">Remove Duplicates</button>
+        </div>
+    </div>
+
+    <div id="result-container">
+        <label for="">Result</label>
+        <textarea id="result"></textarea>
+
+
+        <div>
+            <button onclick="window.location.reload();">Go Back</button>
+        </div>
+
+    </div>
+
+    <script>
+        function remove_duplicates() {
+            // Get the text to scan
+            let scan = document.getElementById('scan').value;
+            // Get the text to remove
+            let remove = document.getElementById('remove').value;
+            // Split the text to scan into an array new line
+            let scan_array = scan.split('\n');
+            // Split the text to remove into an array new line
+            let remove_array = remove.split('\n');
+            // Create a new array to store the result
+            let result_array = [];
+            // Loop through the scan array
+            for (let i = 0; i < scan_array.length; i++) {
+                // Get the current line
+                let line = scan_array[i];
+                // Check if the line is in the remove array
+                if (remove_array.indexOf(line) == -1) {
+                    // If not add it to the result array
+                    result_array.push(line);
+                }
+            }
+            // Join the result array into a string
+            let result = result_array.join('\n');
+            // Set the result textarea value
+            document.getElementById('result').value = result;
+
+            // Show the result container
+            document.getElementById('result-container').style.display = 'block';
+            // Hide the form container
+            document.getElementById('form-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
